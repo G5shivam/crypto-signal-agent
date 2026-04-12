@@ -1,0 +1,21 @@
+{
+  "name": "crypto-agent",
+  "version": "2.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"node server/index.js\" \"vite\"",
+    "server": "node server/index.js",
+    "client": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "vite": "^8.0.3"
+  }
+}
