@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import express from "express";
@@ -26,6 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
+const distDir = resolve(__dirname, "../dist");
 
 // ─── Health check ───
 app.get("/api/health", (req, res) => {
@@ -119,6 +120,14 @@ app.post("/api/signal", async (req, res) => {
     res.status(500).json({ error: "Signal generation failed: " + err.message });
   }
 });
+
+if (existsSync(distDir)) {
+  app.use(express.static(distDir));
+
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(resolve(distDir, "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`\n  🚀 CryptoAgent API Server running on http://localhost:${PORT}`);
